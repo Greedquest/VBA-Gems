@@ -1,2 +1,14 @@
 ﻿'@Folder "_Excel"
 Option Explicit
+
+Private Sub Workbook_BeforeClose(Cancel As Boolean)
+    'Do stuff
+    If Not Me.Saved Then
+        Select Case MsgBox("Save?", vbYesNoCancel)
+            Case vbYes
+                Me.Save
+            Case vbCancel
+                Cancel = True
+        End Select
+    End If
+End Sub

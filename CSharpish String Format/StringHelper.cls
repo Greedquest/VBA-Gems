@@ -56,35 +56,35 @@ End Sub
 Private Sub InitNumericSpecifiers()
 
     Set this.NumericSpecifiers = New Collection
-'    this.NumericSpecifiers.Add New CurrencySFI
-'    this.NumericSpecifiers.Add New DecimalSFI
+    '    this.NumericSpecifiers.Add New CurrencySFI
+    '    this.NumericSpecifiers.Add New DecimalSFI
     this.NumericSpecifiers.Add New GeneralNumericSFI
-'    this.NumericSpecifiers.Add New PercentSFI
-'    this.NumericSpecifiers.Add New FixedPointSFI
-'    this.NumericSpecifiers.Add New ExponentialSFI
-'    this.NumericSpecifiers.Add New HexSFI
-'    this.NumericSpecifiers.Add New RoundTripSFI
-'    this.NumericSpecifiers.Add New NumericPaddingSFI
+    '    this.NumericSpecifiers.Add New PercentSFI
+    '    this.NumericSpecifiers.Add New FixedPointSFI
+    '    this.NumericSpecifiers.Add New ExponentialSFI
+    '    this.NumericSpecifiers.Add New HexSFI
+    '    this.NumericSpecifiers.Add New RoundTripSFI
+    '    this.NumericSpecifiers.Add New NumericPaddingSFI
 
 End Sub
 
 Private Sub InitDateTimeSpecifiers()
 
     Set this.DateTimeSpecifiers = New Collection
-'    this.DateTimeSpecifiers.Add New CustomDFI
-'    this.DateTimeSpecifiers.Add New FullDateLongStringFormatSpecifier
-'    this.DateTimeSpecifiers.Add New FullDateShortSFI
-'    this.DateTimeSpecifiers.Add New GeneralLongDateTimeSFI
-'    this.DateTimeSpecifiers.Add New GeneralShortDateTimeSFI
-'    this.DateTimeSpecifiers.Add New LongDFI
-'    this.DateTimeSpecifiers.Add New LongTimeSFI
-'    this.DateTimeSpecifiers.Add New ShortDFI
-'    this.DateTimeSpecifiers.Add New SortableDateTimeSFI
+    '    this.DateTimeSpecifiers.Add New CustomDFI
+    '    this.DateTimeSpecifiers.Add New FullDateLongStringFormatSpecifier
+    '    this.DateTimeSpecifiers.Add New FullDateShortSFI
+    '    this.DateTimeSpecifiers.Add New GeneralLongDateTimeSFI
+    '    this.DateTimeSpecifiers.Add New GeneralShortDateTimeSFI
+    '    this.DateTimeSpecifiers.Add New LongDFI
+    '    this.DateTimeSpecifiers.Add New LongTimeSFI
+    '    this.DateTimeSpecifiers.Add New ShortDFI
+    '    this.DateTimeSpecifiers.Add New SortableDateTimeSFI
 
 End Sub
 
 Private Function GetFormatSpecifiers(ByVal format_string As String, valuesCount As Integer) As Collection
-'executes a regular expression against format_string to extract all placeholders into a MatchCollection
+    'executes a regular expression against format_string to extract all placeholders into a MatchCollection
 
     Dim regex As New RegExp
     Dim matches As MatchCollection
@@ -117,7 +117,7 @@ Private Function GetFormatSpecifiers(ByVal format_string As String, valuesCount 
     regex.Global = True
 
     Set matches = regex.Execute(format_string)
-    For Each thisMatch In matches 'loop through all
+    For Each thisMatch In matches                'loop through all
 
         'Extract index portion of ReGex match
         Set specifier = New StringFormatSpecifier
@@ -167,7 +167,7 @@ Public Function StringFormat(format_string As String, values() As Variant) As St
     'replace escaped backslashes with 'ESC' character [Chr$(27)]
     'to optimize escape sequences evaluation:
     If Not useLiteral And StringContains(result, "\\") Then _
-        result = Replace(result, "\\", Chr$(27))
+                                                       result = Replace(result, "\\", Chr$(27))
 
     Dim formattedValue As String
     Dim alignmentPadding As Integer
@@ -210,13 +210,13 @@ Public Function StringFormat(format_string As String, values() As Variant) As St
 
             'negative: left-justified alignment
             If alignmentPadding - Len(formattedValue) > 0 Then _
-                formattedValue = formattedValue & String$(alignmentPadding - Len(formattedValue), this.PaddingCharacter)
+                                                      formattedValue = formattedValue & String$(alignmentPadding - Len(formattedValue), this.PaddingCharacter)
 
         ElseIf specifier.Alignment > 0 Then
 
             'positive: right-justified alignment
             If alignmentPadding - Len(formattedValue) > 0 Then _
-                formattedValue = String$(alignmentPadding - Len(formattedValue), this.PaddingCharacter) & formattedValue
+                                                      formattedValue = String$(alignmentPadding - Len(formattedValue), this.PaddingCharacter) & formattedValue
 
         End If
 
@@ -236,3 +236,5 @@ Public Function StringFormat(format_string As String, values() As Variant) As St
     StringFormat = result
 
 End Function
+
+

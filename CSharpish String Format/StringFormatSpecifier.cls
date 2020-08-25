@@ -13,8 +13,8 @@ Option Explicit
 Private Type tSpecifier
     Index As Integer
     identifier As String
-    AlignmentSpecifier As Integer
-    PrecisionSpecifier As Integer
+    alignmentSpecifier As Integer
+    precisionSpecifier As Integer
     CustomSpecifier As String
 End Type
 
@@ -37,15 +37,15 @@ Public Property Let identifier(value As String)
 End Property
 
 Public Property Get Alignment() As Integer
-    Alignment = this.AlignmentSpecifier
+    Alignment = this.alignmentSpecifier
 End Property
 
 Public Property Let Alignment(value As Integer)
-    this.AlignmentSpecifier = value
+    this.alignmentSpecifier = value
 End Property
 
 Public Property Get Precision() As Integer
-    Precision = this.PrecisionSpecifier
+    Precision = this.precisionSpecifier
 End Property
 
 Public Property Get CustomSpecifier() As String
@@ -54,16 +54,17 @@ End Property
 
 Public Property Let CustomSpecifier(value As String)
     this.CustomSpecifier = value
-    If IsNumeric(value) And Val(value) <> 0 Then this.PrecisionSpecifier = CInt(value)
+    If IsNumeric(value) And Val(value) <> 0 Then this.precisionSpecifier = CInt(value)
 End Property
 
 Public Function ToString() As String
     ToString = "{" & this.Index & _
-                     IIf(this.AlignmentSpecifier <> 0, _
-                         "," & this.AlignmentSpecifier, vbNullString) & _
-                     IIf(this.identifier <> vbNullString, _
-                         ":" & this.identifier, vbNullString) & _
-                     IIf(this.CustomSpecifier <> vbNullString, _
-                         this.CustomSpecifier, vbNullString) & "}"
+               IIf(this.alignmentSpecifier <> 0, _
+                   "," & this.alignmentSpecifier, vbNullString) & _
+                   IIf(this.identifier <> vbNullString, _
+                       ":" & this.identifier, vbNullString) & _
+                       IIf(this.CustomSpecifier <> vbNullString, _
+                           this.CustomSpecifier, vbNullString) & "}"
 End Function
+
 

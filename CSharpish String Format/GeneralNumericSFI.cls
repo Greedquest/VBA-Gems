@@ -12,19 +12,19 @@ Option Explicit
 
 Implements IStringFormatIdentifier
 
-Private Function IStringFormatIdentifier_GetFormatString(specifier As StringFormatSpecifier) As String
+Private Function IStringFormatIdentifier_GetFormatString(ByVal specifier As StringFormatSpecifier) As String
     IStringFormatIdentifier_GetFormatString = vbNullString
 End Function
 
-Private Function IStringFormatIdentifier_GetFormattedValue(value As Variant, specifier As StringFormatSpecifier) As String
+Private Function IStringFormatIdentifier_GetFormattedValue(ByVal value As Variant, ByVal specifier As StringFormatSpecifier) As String
     IStringFormatIdentifier_GetFormattedValue = GetFormattedValue(value, specifier)
 End Function
 
-Private Function IStringFormatIdentifier_IsIdentifierMatch(specifier As StringFormatSpecifier) As Boolean
+Private Function IStringFormatIdentifier_IsIdentifierMatch(ByVal specifier As StringFormatSpecifier) As Boolean
     IStringFormatIdentifier_IsIdentifierMatch = UCase$(specifier.identifier) = "G"
 End Function
 
-Public Function GetFormattedValue(value As Variant, specifier As StringFormatSpecifier) As String
+Public Function GetFormattedValue(ByVal value As Variant, ByVal specifier As StringFormatSpecifier) As String
     Dim result As String
     Dim exponentialNotation As String
     Dim power As Integer

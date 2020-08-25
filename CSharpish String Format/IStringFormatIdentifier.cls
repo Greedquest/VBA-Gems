@@ -12,16 +12,16 @@ Attribute VB_Exposed = False
 Option Explicit
 
 'returns a format string suitable for use with VB6's native Format() function.
-Public Function GetFormatString(specifier As StringFormatSpecifier) As String
+Public Function GetFormatString(ByVal specifier As StringFormatSpecifier) As String
 End Function
 
 'returns the formatted value.
-Public Function GetFormattedValue(value As Variant, _
-                                  specifier As StringFormatSpecifier) As String
+Public Function GetFormattedValue(ByVal value As Variant, ByVal specifier As StringFormatSpecifier) As String
 End Function
 
 'compares specified format identifier with implementation-defined one,
 'returns true if format is applicable.
-Public Function IsIdentifierMatch(specifier As StringFormatSpecifier) As Boolean
+Public Function IsIdentifierMatch(ByVal specifier As StringFormatSpecifier) As Boolean
 End Function
+
 

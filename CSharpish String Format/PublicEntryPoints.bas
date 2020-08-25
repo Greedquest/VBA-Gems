@@ -7,3 +7,4 @@ Public Function StringFormat(format_string As String, ParamArray values()) As St
     valuesArray = values
     StringFormat = StringHelper.StringFormat(format_string, valuesArray)
 End Function
+

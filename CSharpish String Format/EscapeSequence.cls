@@ -119,3 +119,5 @@ Private Sub ProcessAsciiEscape(ByRef format_string As String, ByVal regexPattern
     Set matches = Nothing
 
 End Sub
+
+

@@ -5,7 +5,7 @@ Option Private Module
 
 Public Function StringContains(ByVal haystack As String, ByVal needle As String, Optional ByVal caseSensitive As Boolean = False) As Boolean
 
-   Dim compareMethod As Integer
+    Dim compareMethod As Integer
 
     If caseSensitive Then
         compareMethod = vbBinaryCompare
@@ -23,12 +23,12 @@ Public Function StringContainsAny(ByVal haystack As String, ByVal caseSensitive 
 
     For i = LBound(needles) To UBound(needles)
         If StringContains(haystack, needles(i), caseSensitive) Then
-          StringContainsAny = True
-          Exit Function
+            StringContainsAny = True
+            Exit Function
         End If
     Next
 
-    StringContainsAny = False 'Not really necessary, default is False..
+    StringContainsAny = False                    'Not really necessary, default is False..
 
 End Function
 
@@ -43,3 +43,4 @@ Public Function CopyCapitalisation(ByVal source As String, ByVal applyTo As Stri
         CopyCapitalisation = LCase(applyTo)
     End If
 End Function
+
