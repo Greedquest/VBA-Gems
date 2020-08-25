@@ -27,7 +27,7 @@ End Function
 Public Function GetFormattedValue(ByVal value As Variant, ByVal specifier As StringFormatSpecifier) As String
     Dim result As String
     Dim exponentialNotation As String
-    Dim power As Integer
+    
     Dim exponentialFormat As New ExponentialSFI
     Dim fixedPointFormat As New FixedPointSFI
     Dim decimalFormat As New DecimalSFI
@@ -37,30 +37,29 @@ Public Function GetFormattedValue(ByVal value As Variant, ByVal specifier As Str
     formatSpecifier.CustomSpecifier = specifier.CustomSpecifier
 
     If StringMatchesAny(TypeName(value), "Integer", "Long") Then
-
         formatSpecifier.identifier = CopyCapitalisation(specifier.identifier, "D")
         result = decimalFormat.GetFormattedValue(value, formatSpecifier)
 
     ElseIf TypeName(value) = "Double" Then
-
         formatSpecifier.identifier = CopyCapitalisation(specifier.identifier, "E")
         exponentialNotation = exponentialFormat.GetFormattedValue(value, formatSpecifier)
-        power = exponentialFormat.GetPower(exponentialNotation)
-
-        If power > -5 And Abs(power) < specifier.Precision Then
-
+        
+        'Check the power returned by this call, since General
+        'only uses exponential notation in certain circumstances
+        Dim exponent As Long
+        exponent = exponentialFormat.ParseExponent(exponentialNotation)
+        If exponent > -5 And Abs(exponent) < specifier.Precision Then
             formatSpecifier.identifier = CopyCapitalisation(specifier.identifier, "F")
             result = fixedPointFormat.GetFormattedValue(value, formatSpecifier)
 
         Else
-
             result = exponentialNotation
 
         End If
 
     End If
-
+    
     GetFormattedValue = result
-
+    
 End Function
 

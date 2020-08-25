@@ -65,7 +65,8 @@ Public Function GetFormattedValue(ByVal value As Variant, ByVal specifier As Str
 
 End Function
 
-Public Function GetPower(ByVal formattedValue As String) As Long
-
+'Should be static method really
+Public Function ParseExponent(ByVal formattedValue As String) As Long
+    ParseExponent = Mid(formattedValue, InStr(1, UCase$(formattedValue), "E-") + 1, Len(formattedValue) - InStr(1, UCase$(formattedValue), "E-"))
 End Function
 
