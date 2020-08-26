@@ -217,13 +217,13 @@ NumberFormatSpecifiers:
                         eNotation = FormerStringFormat("{0:" & specifier & "}", v)
 
                         'get the power of eNotation:
-                        ePower = Mid$(eNotation, InStr(1, UCase$(eNotation), "E-") + 1, Len(eNotation) - InStr(1, UCase$(eNotation), "E-"))
+                        ePower = Mid(eNotation, InStr(1, eNotation, "e", vbTextCompare) + 1)
 
                         If ePower > -5 And Abs(ePower) < precisionSpecifier Then
                             'use {0:F} when ePower > -5 and abs(ePower) < precisionSpecifier:
                             'evaluate the floating-point value (recursive call):
                             specifier = IIf(formatSpecifier = "G", "F", "f")
-                            formattedValue = FormerStringFormat("{0:" & formatSpecifier & _
+                            formattedValue = FormerStringFormat("{0:" & specifier & _
                                                                 IIf(precisionSpecifier <> 0, precisionString, vbNullString) & "}", values(p))
                         Else
                             'fallback to {0:E} if previous rule didn't apply:
