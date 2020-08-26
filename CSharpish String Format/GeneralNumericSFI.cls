@@ -28,29 +28,32 @@ Public Function GetFormattedValue(ByVal value As Variant, ByVal specifier As Str
     Dim result As String
     Dim exponentialNotation As String
     
-    Dim exponentialFormat As New ExponentialSFI
-    Dim fixedPointFormat As New FixedPointSFI
-    Dim decimalFormat As New DecimalSFI
-
     Dim formatSpecifier As New StringFormatSpecifier
     formatSpecifier.Alignment = specifier.Alignment
     formatSpecifier.CustomSpecifier = specifier.CustomSpecifier
 
     If StringMatchesAny(TypeName(value), "Integer", "Long") Then
         formatSpecifier.identifier = CopyCapitalisation(specifier.identifier, "D")
-        result = decimalFormat.GetFormattedValue(value, formatSpecifier)
+        With New DecimalSFI
+            result = .GetFormattedValue(value, formatSpecifier)
+        End With
 
     ElseIf TypeName(value) = "Double" Then
         formatSpecifier.identifier = CopyCapitalisation(specifier.identifier, "E")
-        exponentialNotation = exponentialFormat.GetFormattedValue(value, formatSpecifier)
+        With New ExponentialSFI
+            exponentialNotation = .GetFormattedValue(value, formatSpecifier)
         
-        'Check the power returned by this call, since General
-        'only uses exponential notation in certain circumstances
-        Dim exponent As Long
-        exponent = exponentialFormat.ParseExponent(exponentialNotation)
+            'Check the power returned by this call, since General
+            'only uses exponential notation in certain circumstances
+            Dim exponent As Long
+            exponent = exponentialFormat.ParseExponent(exponentialNotation)
+        End With
+        
         If exponent > -5 And Abs(exponent) < specifier.Precision Then
             formatSpecifier.identifier = CopyCapitalisation(specifier.identifier, "F")
-            result = fixedPointFormat.GetFormattedValue(value, formatSpecifier)
+            With New FixedPointSFI
+                result = fixedPointFormat.GetFormattedValue(value, formatSpecifier)
+            End With
 
         Else
             result = exponentialNotation

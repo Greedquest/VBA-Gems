@@ -17,51 +17,27 @@ Private Function IStringFormatIdentifier_GetFormatString(ByVal specifier As Stri
 End Function
 
 Private Function IStringFormatIdentifier_GetFormattedValue(ByVal value As Variant, ByVal specifier As StringFormatSpecifier) As String
-    Err.Raise 5                                  'TODO implement interface member
+    IStringFormatIdentifier_GetFormattedValue = GetFormattedValue(value, specifier)
 End Function
 
 Private Function IStringFormatIdentifier_IsIdentifierMatch(ByVal specifier As StringFormatSpecifier) As Boolean
-    Err.Raise 5                                  'TODO implement interface member
+    IStringFormatIdentifier_IsIdentifierMatch = UCase(specifier.identifier) = "E"
 End Function
 
 Public Function GetFormattedValue(ByVal value As Variant, ByVal specifier As StringFormatSpecifier) As String
+        
+    If LenB(formatGroup) > 2 And specifier.Precision > 0 Then
+        GetFormattedValue = Format$(value, "0." & String$(specifier.Precision - 1, Chr$(48)) & "#" & specifier.identifier & "-#")
+    
+    ElseIf LenB(formatGroup) > 2 And precisionSpecifier = 0 Then
+        Err.Raise ERR_FORMAT_EXCEPTION, ERR_SOURCE, ERR_MSG_INVALID_FORMAT_STRING
+        
+    Else
+        GetFormattedValue = Format$(value, "0.00000#" & specifier.identifier & "-#") 'defaults to 6 decimals
+        
+    End If
+    
 
-    '    Dim result As String
-    '    Dim exponentialNotation As String
-    '    Dim power As Integer
-    '    Dim exponentialFormat As New ExponentialSFI
-    '    Dim fixedPointFormat As New FixedPointSFI
-    '    Dim decimalFormat As New DecimalSFI
-    '
-    '    Dim formatSpecifier As New StringFormatSpecifier
-    '    formatSpecifier.Alignment = specifier.Alignment
-    '    formatSpecifier.CustomSpecifier = specifier.CustomSpecifier
-    '
-    '    If StringMatchesAny(TypeName(value), "Integer", "Long") Then
-    '
-    '        formatSpecifier.identifier = IIf(specifier.identifier = "G", "D", "d")
-    '        result = decimalFormat.GetFormattedValue(value, formatSpecifier)
-    '
-    '    ElseIf TypeName(value) = "Double" Then
-    '
-    '        formatSpecifier.identifier = IIf(specifier.identifier = "G", "E", "e")
-    '        exponentialNotation = exponentialFormat.GetFormattedValue(value, formatSpecifier)
-    '        power = exponentialFormat.GetPower(exponentialNotation)
-    '
-    '        If power > -5 And Abs(power) < specifier.Precision Then
-    '
-    '            formatSpecifier.identifier = IIf(specifier.identifier = "G", "F", "f")
-    '            result = fixedPointFormat.GetFormattedValue(value, formatSpecifier)
-    '
-    '        Else
-    '
-    '            result = exponentialNotation
-    '
-    '        End If
-    '
-    '    End If
-    '
-    '    GetFormattedValue = result
 
 End Function
 

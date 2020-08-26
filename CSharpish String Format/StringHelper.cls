@@ -61,7 +61,7 @@ Private Sub InitNumericSpecifiers()
     this.NumericSpecifiers.Add New GeneralNumericSFI
     '    this.NumericSpecifiers.Add New PercentSFI
     '    this.NumericSpecifiers.Add New FixedPointSFI
-    '    this.NumericSpecifiers.Add New ExponentialSFI
+    this.NumericSpecifiers.Add New ExponentialSFI
     '    this.NumericSpecifiers.Add New HexSFI
     '    this.NumericSpecifiers.Add New RoundTripSFI
     '    this.NumericSpecifiers.Add New NumericPaddingSFI
@@ -129,10 +129,10 @@ Private Function GetFormatSpecifiers(ByVal format_string As String, valuesCount 
         End If
         If specifier.Index > largestIndex Then largestIndex = specifier.Index
 
-        If Not thisMatch.SubMatches(1) = vbEmpty Then specifier.Alignment = CInt(Replace(CStr(thisMatch.SubMatches(1)), ",", vbNullString))
+        If Not thisMatch.SubMatches(1) = vbEmpty Then specifier.Alignment = Mid$(thisMatch.SubMatches(1), 2)
         If Not thisMatch.SubMatches(2) = vbEmpty Then
-            specifier.identifier = Left(Replace(CStr(thisMatch.SubMatches(2)), ":", vbNullString), 1)
-            specifier.CustomSpecifier = Replace(CStr(thisMatch.SubMatches(2)), ":" & specifier.identifier, vbNullString)
+            specifier.identifier = Mid$(thisMatch.SubMatches(2), 2, 1)
+            specifier.CustomSpecifier = Mid$(thisMatch.SubMatches(2), 3)
         End If
 
         result.Add specifier
@@ -141,8 +141,6 @@ Private Function GetFormatSpecifiers(ByVal format_string As String, valuesCount 
     If matches.Count > 0 And (uniqueCount <> valuesCount Or largestIndex >= uniqueCount Or valuesCount = 0) Then Err.Raise ERR_FORMAT_EXCEPTION, ERR_SOURCE, ERR_MSG_FORMAT_EXCEPTION
 
     Set GetFormatSpecifiers = result
-    Set regex = Nothing
-    Set matches = Nothing
 
 End Function
 
@@ -159,15 +157,17 @@ Public Function StringFormat(format_string As String, values() As Variant) As St
     'when format_string starts with "@", escapes are not replaced
     '(string is treated as a literal string with placeholders)
     useLiteral = StringStartsWith("@", result)
-
-    'remove the "@" literal specifier from the result string
-    If useLiteral Then result = Right(result, Len(result) - 1)
-
-
-    'replace escaped backslashes with 'ESC' character [Chr$(27)]
-    'to optimize escape sequences evaluation:
-    If Not useLiteral And StringContains(result, "\\") Then _
-                                                       result = Replace(result, "\\", Chr$(27))
+    
+    If useLiteral Then
+        'remove the "@" literal specifier from the result string
+        result = Right$(result, Len(result) - 1)
+    
+    ElseIf StringContains(result, "\\") Then
+        'replace escaped backslashes with 'ESC' character [Chr$(27)]
+        'to optimize escape sequences evaluation:
+        result = Replace(result, "\\", Chr$(27))
+        
+    End If
 
     Dim formattedValue As String
     Dim alignmentPadding As Integer
@@ -180,43 +180,41 @@ Public Function StringFormat(format_string As String, values() As Variant) As St
         identifierFound = (specifier.identifier = vbNullString)
 
         If IsNumeric(values(specifier.Index)) Then
-
             For Each identifier In this.NumericSpecifiers
                 If identifier.IsIdentifierMatch(specifier) Then
-
                     identifierFound = True
                     formattedValue = identifier.GetFormattedValue(values(specifier.Index), specifier)
 
                 End If
+                
             Next
 
         ElseIf TypeName(values(specifier.Index)) = "Date" Then
-
             For Each identifier In this.DateTimeSpecifiers
                 If identifier.IsIdentifierMatch(specifier) Then
-
                     identifierFound = True
                     formattedValue = identifier.GetFormattedValue(values(specifier.Index), specifier)
 
                 End If
+                
             Next
-
+            
         End If
 
         If Not identifierFound Then Err.Raise ERR_FORMAT_EXCEPTION, ERR_SOURCE, ERR_MSG_INVALID_FORMAT_STRING
 
         alignmentPadding = Abs(specifier.Alignment)
         If specifier.Alignment < 0 Then
-
             'negative: left-justified alignment
-            If alignmentPadding - Len(formattedValue) > 0 Then _
-                                                      formattedValue = formattedValue & String$(alignmentPadding - Len(formattedValue), this.PaddingCharacter)
+            If alignmentPadding - Len(formattedValue) > 0 Then
+                formattedValue = formattedValue & String$(alignmentPadding - Len(formattedValue), this.PaddingCharacter)
+            End If
 
         ElseIf specifier.Alignment > 0 Then
-
             'positive: right-justified alignment
-            If alignmentPadding - Len(formattedValue) > 0 Then _
-                                                      formattedValue = String$(alignmentPadding - Len(formattedValue), this.PaddingCharacter) & formattedValue
+            If alignmentPadding - Len(formattedValue) > 0 Then
+                formattedValue = String$(alignmentPadding - Len(formattedValue), this.PaddingCharacter) & formattedValue
+            End If
 
         End If
 
@@ -236,5 +234,4 @@ Public Function StringFormat(format_string As String, values() As Variant) As St
     StringFormat = result
 
 End Function
-
 

@@ -54,7 +54,7 @@ End Property
 
 Public Property Let CustomSpecifier(value As String)
     this.CustomSpecifier = value
-    If IsNumeric(value) And Val(value) <> 0 Then this.precisionSpecifier = CInt(value)
+    If IsNumeric(value) And Val(value) <> 0 Then this.precisionSpecifier = value
 End Property
 
 Public Function ToString() As String
