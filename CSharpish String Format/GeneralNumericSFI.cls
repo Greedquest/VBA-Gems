@@ -61,3 +61,4 @@ Public Function GetFormattedValue(ByVal value As Variant, ByVal specifier As Str
     GetFormattedValue = result
     
 End Function
+

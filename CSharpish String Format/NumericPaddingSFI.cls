@@ -14,9 +14,10 @@ Option Explicit
 Implements IStringFormatIdentifier
 
 Private Function IStringFormatIdentifier_GetFormattedValue(ByVal value As Variant, ByVal specifier As StringFormatSpecifier) As String
-    Err.Raise 5 'TODO what is this?
+    Err.Raise 5                                  'TODO what is this?
 End Function
 
 Private Function IStringFormatIdentifier_IsIdentifierMatch(ByVal specifier As StringFormatSpecifier) As Boolean
     IStringFormatIdentifier_IsIdentifierMatch = False
 End Function
+

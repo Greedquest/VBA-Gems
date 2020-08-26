@@ -21,3 +21,4 @@ End Function
 Private Function IStringFormatIdentifier_IsIdentifierMatch(ByVal specifier As StringFormatSpecifier) As Boolean
     IStringFormatIdentifier_IsIdentifierMatch = UCase(specifier.identifier) = "D"
 End Function
+

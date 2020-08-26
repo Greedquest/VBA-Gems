@@ -20,7 +20,7 @@ Private Function IStringFormatIdentifier_GetFormattedValue(ByVal value As Varian
         IStringFormatIdentifier_GetFormattedValue = Format$(value, "0." & String$(specifier.Precision - 1, Chr$(48)) & "#" & specifier.identifier & "-#")
         
     Else
-        IStringFormatIdentifier_GetFormattedValue = Format$(value, "0.00000#" & specifier.identifier & "-#")                                                  'defaults to 6 decimals
+        IStringFormatIdentifier_GetFormattedValue = Format$(value, "0.00000#" & specifier.identifier & "-#") 'defaults to 6 decimals
         
     End If
 End Function
@@ -33,5 +33,4 @@ End Function
 Public Function ParseExponent(ByVal formattedValue As String) As Long
     ParseExponent = Mid(formattedValue, InStr(1, formattedValue, "E", vbTextCompare) + 1)
 End Function
-
 

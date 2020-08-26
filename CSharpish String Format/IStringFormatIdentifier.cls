@@ -20,4 +20,3 @@ End Function
 Public Function IsIdentifierMatch(ByVal specifier As StringFormatSpecifier) As Boolean
 End Function
 
-
