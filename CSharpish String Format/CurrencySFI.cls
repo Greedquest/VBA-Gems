@@ -15,8 +15,8 @@ Implements IStringFormatIdentifier
 
 Private Function IStringFormatIdentifier_GetFormattedValue(ByVal value As Variant, ByVal specifier As StringFormatSpecifier) As String
 
-    If precisionSpecifier > 0 Then
-        IStringFormatIdentifier_GetFormattedValue = Format(value, Replace$("#,##0.$", ".", "." & String$(precisionString, Chr$(48))))
+    If specifier.Precision > 0 Then
+        IStringFormatIdentifier_GetFormattedValue = Format(value, Replace$("#,##0.$", ".", "." & String$(specifier.Precision, Chr$(48))))
     Else
         IStringFormatIdentifier_GetFormattedValue = Format(value, "#,##0.00$")
     End If

@@ -62,9 +62,9 @@ Private Sub InitNumericSpecifiers()
     this.NumericSpecifiers.Add PercentSFI
     this.NumericSpecifiers.Add FixedPointSFI
     this.NumericSpecifiers.Add ExponentialSFI
-    '    this.NumericSpecifiers.Add  HexSFI
-    '    this.NumericSpecifiers.Add  RoundTripSFI
-    '    this.NumericSpecifiers.Add  NumericPaddingSFI
+    this.NumericSpecifiers.Add HexSFI
+    this.NumericSpecifiers.Add RoundTripSFI
+    this.NumericSpecifiers.Add NumericPaddingSFI
 
 End Sub
 
