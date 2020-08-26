@@ -217,6 +217,7 @@ NumberFormatSpecifiers:
                         eNotation = FormerStringFormat("{0:" & specifier & "}", v)
 
                         'get the power of eNotation:
+                        '@Ignore UntypedFunctionUsage:no sense zooming to and from Variant
                         ePower = Mid(eNotation, InStr(1, eNotation, "e", vbTextCompare) + 1)
 
                         If ePower > -5 And Abs(ePower) < precisionSpecifier Then

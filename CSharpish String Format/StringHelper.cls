@@ -71,6 +71,7 @@ End Sub
 Private Sub InitDateTimeSpecifiers()
 
     Set this.DateTimeSpecifiers = New Collection
+    this.DateTimeSpecifiers.Add GenericDateTimeSFI
     '    this.DateTimeSpecifiers.Add New CustomDFI
     '    this.DateTimeSpecifiers.Add New FullDateLongStringFormatSpecifier
     '    this.DateTimeSpecifiers.Add New FullDateShortSFI
