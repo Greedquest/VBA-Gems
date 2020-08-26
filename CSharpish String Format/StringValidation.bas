@@ -32,6 +32,20 @@ Public Function StringContainsAny(ByVal haystack As String, ByVal caseSensitive 
 
 End Function
 
+Public Function StringMatchesAny(ByVal searchString As String, ParamArray possibleMatches()) As Boolean
+
+    'String-typed local copies of passed parameter values:
+    Dim i As Long
+
+    StringMatchesAny = True
+    For i = LBound(possibleMatches) To UBound(possibleMatches)
+        If searchString = CStr(possibleMatches(i)) Then Exit Function
+    Next
+
+    StringMatchesAny = False
+
+End Function
+
 Public Function StringStartsWith(ByVal startingSequence As String, ByVal source As String) As Boolean
     StringStartsWith = Left$(source, Len(startingSequence)) = startingSequence
 End Function

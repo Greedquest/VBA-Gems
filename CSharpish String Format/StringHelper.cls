@@ -57,11 +57,11 @@ Private Sub InitNumericSpecifiers()
 
     Set this.NumericSpecifiers = New Collection
     '    this.NumericSpecifiers.Add New CurrencySFI
-    '    this.NumericSpecifiers.Add New DecimalSFI
-    this.NumericSpecifiers.Add New GeneralNumericSFI
+    this.NumericSpecifiers.Add DecimalSFI
+    this.NumericSpecifiers.Add GeneralNumericSFI
     '    this.NumericSpecifiers.Add New PercentSFI
     '    this.NumericSpecifiers.Add New FixedPointSFI
-    this.NumericSpecifiers.Add New ExponentialSFI
+    this.NumericSpecifiers.Add ExponentialSFI
     '    this.NumericSpecifiers.Add New HexSFI
     '    this.NumericSpecifiers.Add New RoundTripSFI
     '    this.NumericSpecifiers.Add New NumericPaddingSFI

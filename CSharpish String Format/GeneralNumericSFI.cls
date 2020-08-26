@@ -5,16 +5,13 @@ END
 Attribute VB_Name = "GeneralNumericSFI"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
-Attribute VB_PredeclaredId = False
+Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 '@Folder("CSharpishStringFormatter.StringFormatIdentifiers")
+'@PredeclaredID
 Option Explicit
 
 Implements IStringFormatIdentifier
-
-Private Function IStringFormatIdentifier_GetFormatString(ByVal specifier As StringFormatSpecifier) As String
-    IStringFormatIdentifier_GetFormatString = vbNullString
-End Function
 
 Private Function IStringFormatIdentifier_GetFormattedValue(ByVal value As Variant, ByVal specifier As StringFormatSpecifier) As String
     IStringFormatIdentifier_GetFormattedValue = GetFormattedValue(value, specifier)
@@ -31,29 +28,28 @@ Public Function GetFormattedValue(ByVal value As Variant, ByVal specifier As Str
     Dim formatSpecifier As New StringFormatSpecifier
     formatSpecifier.Alignment = specifier.Alignment
     formatSpecifier.CustomSpecifier = specifier.CustomSpecifier
+    
+    Dim stringFormatIdentifier As IStringFormatIdentifier
 
     If StringMatchesAny(TypeName(value), "Integer", "Long") Then
         formatSpecifier.identifier = CopyCapitalisation(specifier.identifier, "D")
-        With New DecimalSFI
-            result = .GetFormattedValue(value, formatSpecifier)
-        End With
+        Set stringFormatIdentifier = DecimalSFI
+        result = stringFormatIdentifier.GetFormattedValue(value, formatSpecifier)
 
     ElseIf TypeName(value) = "Double" Then
         formatSpecifier.identifier = CopyCapitalisation(specifier.identifier, "E")
-        With New ExponentialSFI
-            exponentialNotation = .GetFormattedValue(value, formatSpecifier)
+        Set stringFormatIdentifier = ExponentialSFI
+        exponentialNotation = stringFormatIdentifier.GetFormattedValue(value, formatSpecifier)
         
-            'Check the power returned by this call, since General
-            'only uses exponential notation in certain circumstances
-            Dim exponent As Long
-            exponent = exponentialFormat.ParseExponent(exponentialNotation)
-        End With
+        'Check the power returned by this call, since General
+        'only uses exponential notation in certain circumstances
+        Dim exponent As Long
+        exponent = ExponentialSFI.ParseExponent(exponentialNotation)
         
         If exponent > -5 And Abs(exponent) < specifier.Precision Then
             formatSpecifier.identifier = CopyCapitalisation(specifier.identifier, "F")
-            With New FixedPointSFI
-                result = fixedPointFormat.GetFormattedValue(value, formatSpecifier)
-            End With
+            Set stringFormatIdentifier = FixedPointSFI
+            result = stringFormatIdentifier.GetFormattedValue(value, formatSpecifier)
 
         Else
             result = exponentialNotation
@@ -65,4 +61,3 @@ Public Function GetFormattedValue(ByVal value As Variant, ByVal specifier As Str
     GetFormattedValue = result
     
 End Function
-

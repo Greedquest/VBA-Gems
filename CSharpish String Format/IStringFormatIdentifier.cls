@@ -11,10 +11,6 @@ Attribute VB_Exposed = False
 '@Interface
 Option Explicit
 
-'returns a format string suitable for use with VB6's native Format() function.
-Public Function GetFormatString(ByVal specifier As StringFormatSpecifier) As String
-End Function
-
 'returns the formatted value.
 Public Function GetFormattedValue(ByVal value As Variant, ByVal specifier As StringFormatSpecifier) As String
 End Function
