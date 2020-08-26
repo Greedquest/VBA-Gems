@@ -22,7 +22,7 @@ Private Function IStringFormatIdentifier_GetFormattedValue(ByVal value As Varian
         hexValue = Right$(String$(specifier.Precision, "0") & hexValue, specifier.Precision)
     End If
 
-    IStringFormatIdentifier_GetFormattedValue = "0x" & CopyCapitalisation(specifier.identifier, hexValue)
+    IStringFormatIdentifier_GetFormattedValue = CopyCapitalisation(specifier.identifier, "&h" & hexValue)
     
 End Function
 
