@@ -1,0 +1,10 @@
+[project]
+name = "VBA-Gems"
+description = """
+A collection of useful packages
+"""
+ptrsafe = true 
+
+[references]
+"Scripting.Dictionary" = '%WINDIR%\System32\scrrun.dll' 
+"Regex 5.5" = '%WINDIR%\System32\vbscript.dll\3'
