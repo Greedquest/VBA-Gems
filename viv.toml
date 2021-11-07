@@ -2,6 +2,8 @@
 name = "VBA-Gems"
 description = """
 A collection of useful packages
+ - CSharpish string formatter
+ - That's it
 """
 ptrsafe = true 
 
